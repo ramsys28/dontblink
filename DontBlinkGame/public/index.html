@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Don't Blink! - An interactive eye tracking game that challenges you to keep your eyes open while distractions try to make you blink.">
+    <meta name="keywords" content="eye tracking, blink detection, mobile game, react native, computer vision">
+    <meta name="author" content="Don't Blink Game">
+    
+    <title>Don't Blink! - Eye Tracking Game</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👁️</text></svg>">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Don't Blink! - Eye Tracking Game">
+    <meta property="og:description" content="Challenge yourself with real-time blink detection and interactive distractions!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dont-blink-game.render.com">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Don't Blink! - Eye Tracking Game">
+    <meta name="twitter:description" content="Test your willpower with this innovative eye tracking game!">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        
+        #root {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Loading spinner */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #333;
+            border-top: 3px solid #4ecdc4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            color: #4ecdc4;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Hide loading once app loads */
+        .app-loaded .loading-container {
+            display: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+        
+        /* Eye animation for fun */
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        
+        .eye-animation {
+            animation: blink 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-container">
+        <div style="text-align: center;">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Don't Blink! 👁️</div>
+        </div>
+    </div>
+    
+    <!-- Main App Container -->
+    <div id="root"></div>
+    
+    <!-- App Loading Script -->
+    <script>
+        // Hide loading screen once React app loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.body.classList.add('app-loaded');
+            }, 500);
+        });
+        
+        // Prevent right-click context menu for better UX
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // Prevent text selection for better mobile experience
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        
+        // Basic error handling
+        window.addEventListener('error', function(e) {
+            console.error('Application Error:', e.error);
+        });
+        
+        // Service Worker registration (for future PWA features)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>
